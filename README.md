@@ -1,3 +1,4 @@
+[![](https://jitpack.io/v/SUCC-u-lent/arctic-library.svg)](https://jitpack.io/#SUCC-u-lent/arctic-library)
 # Multiboss Bar Mod
 
 A quilt mod that allows compacting multiple boss bars into one!
