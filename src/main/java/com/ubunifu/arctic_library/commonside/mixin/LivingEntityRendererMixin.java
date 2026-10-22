@@ -51,10 +51,10 @@ public abstract class LivingEntityRendererMixin<E extends LivingEntity & CSMEnti
 					matrices,
 					vertexConsumer,
 					commonPart.bounds(),
-					ColorUtil.Argb32.getRed(boundsColor),
-					ColorUtil.Argb32.getGreen(boundsColor),
-					ColorUtil.Argb32.getBlue(boundsColor),
-					ColorUtil.Argb32.getAlpha(boundsColor)
+					(float) ColorUtil.Argb32.getRed(boundsColor) / 255,
+					(float) ColorUtil.Argb32.getGreen(boundsColor) / 255,
+					(float) ColorUtil.Argb32.getBlue(boundsColor) / 255,
+					(float) ColorUtil.Argb32.getAlpha(boundsColor) / 255
 				);
 			}
 		} catch (Exception e) {
