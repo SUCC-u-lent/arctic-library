@@ -382,6 +382,34 @@ public final class MultibossBarCommand {
 		dispatcher.register(root);
 	}
 
+	private static int setBarName(ServerCommandSource source, String id, String displayNameJson) {
+		ServerMultiBossBar bar = BARS.getOrDefault(id, null);
+		if (bar == null) {
+			source.sendError(Text.literal("A boss bar named '" + id + "' does not exist."));
+			return 0;
+		}
+
+		Text displayName = parseTextJson(source, displayNameJson);
+		if (displayName == null) return 0;
+
+		bar.setDisplayName(displayName);
+
+		// Create the client-side container before sending its bar data.
+		try {
+			ServerPlayerEntity player = source.getPlayer();
+			MultibossBarS2CPacket.createBar(bar).send(player);
+			bar.addPlayer(player);
+		} catch (Exception ignored) {
+			// Console and command-block sources do not have a player.
+		}
+
+		source.sendFeedback(
+			() -> Text.literal("Created boss bar '" + id + "'."),
+			false
+		);
+		return 1;
+	}
+
 	private static <T extends Enum<T>> T parseEnum(Class<T> clazz, String name)
 	{
 		T val;
