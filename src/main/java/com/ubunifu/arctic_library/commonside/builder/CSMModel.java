@@ -19,6 +19,7 @@ import java.util.function.*;
 public class CSMModel implements AutoCloseable {
 	ModelData modelData;
 	boolean applyGlobal;
+	Vec3d scale = new Vec3d(1,1,1);
 
 	/** The identity map, aka the unchanged source. */
 	private final Map<String, CommonPart> BASE_PART_MAP = new HashMap<>();
@@ -31,6 +32,11 @@ public class CSMModel implements AutoCloseable {
 		ModelPartData root = modelData.getRoot();
 		process(root, applyGlobal);
 	}
+
+	public void setScale(float x, float y, float z) {
+		this.scale = new Vec3d(x,y,z);
+	}
+
 	//region Animation
 	private float getTickDelta()
 	{
@@ -58,6 +64,11 @@ public class CSMModel implements AutoCloseable {
 	void syncTransforms(M model) {
 		Matrix4f matrix4f = new Matrix4f();
 		matrix4f.translate(-0.04f,1.501f,0);
+		matrix4f.scale(
+			(float)scale.x,
+			(float)scale.y,
+			(float)scale.z
+		);
 		syncTransforms(model, "root", model.getRoot(), matrix4f);
 	}
 
@@ -219,6 +230,12 @@ public class CSMModel implements AutoCloseable {
 				0.0F
 			);
 		}
+
+		matrixStack.scale(
+			(float) this.scale.x,
+			(float) this.scale.y,
+			(float) this.scale.z
+		);
 
 		processChild(
 			"root",
