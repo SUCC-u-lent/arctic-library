@@ -7,8 +7,10 @@ import com.ubunifu.arctic_library.commonside.registry.CSMRegistry;
 import net.minecraft.client.render.*;
 import net.minecraft.client.render.entity.*;
 import net.minecraft.client.render.entity.model.EntityModel;
+import net.minecraft.client.util.ColorUtil;
 import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.entity.*;
+import net.minecraft.util.Color;
 import net.minecraft.util.math.*;
 import org.spongepowered.asm.mixin.*;
 import org.spongepowered.asm.mixin.injection.*;
@@ -23,6 +25,7 @@ public abstract class LivingEntityRendererMixin<E extends LivingEntity & CSMEnti
 	private void render(E livingEntity, float f, float g, MatrixStack matrices, VertexConsumerProvider vertexConsumerProvider, int i, CallbackInfo ci){
 		EntityType<?> entityType = livingEntity.getType();
 		if (!CSMRegistry.containsEntityType(entityType)) return;
+		if (!CSMConstants.shouldRenderCommonsideModel()) return;
 		VertexConsumer vertexConsumer =
 			vertexConsumerProvider.getBuffer(RenderLayer.getLines());
 		matrices.push();
@@ -37,6 +40,7 @@ public abstract class LivingEntityRendererMixin<E extends LivingEntity & CSMEnti
 			1.0F,
 			-1.0F
 		);
+		int boundsColor = CSMConstants.getCommonsideBoundsColor();
 		try (CSMModelInstance modelInstance = CSMModelInstance.createForGeneric(livingEntity, true)) {
 			modelInstance.animateModel(livingEntity, model,false);
 			for (CommonPart commonPart : modelInstance.getModel().getParts().values()) {
@@ -45,7 +49,10 @@ public abstract class LivingEntityRendererMixin<E extends LivingEntity & CSMEnti
 					matrices,
 					vertexConsumer,
 					commonPart.bounds(),
-					1, 0, 0, 1
+					ColorUtil.Argb32.getRed(boundsColor),
+					ColorUtil.Argb32.getGreen(boundsColor),
+					ColorUtil.Argb32.getBlue(boundsColor),
+					ColorUtil.Argb32.getAlpha(boundsColor)
 				);
 			}
 		} catch (Exception e) {

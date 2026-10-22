@@ -24,7 +24,7 @@ public class ExampleMobEntityRenderer extends LivingEntityRenderer<ExampleMobEnt
 
 	public static void Register()
 	{
-//		if (!QuiltLoader.isDevelopmentEnvironment()) return;
+		if (!QuiltLoader.isDevelopmentEnvironment()) return;
 		if (MinecraftQuiltLoader.getEnvironmentType() != EnvType.CLIENT) return;
 		EntityModelLayerRegistry.registerModelLayer(
 			LAYER,
