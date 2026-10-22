@@ -26,7 +26,7 @@ public class ExampleMobEntity extends MobEntity implements CSMEntity {
 			.add(EntityAttributes.GENERIC_ATTACK_DAMAGE, 4.0);
 	}
 	public static void Register() {
-		if (!QuiltLoader.isDevelopmentEnvironment()) return;
+//		if (!QuiltLoader.isDevelopmentEnvironment()) return;
 		TYPE = Registry.register(Registries.ENTITY_TYPE, CSMConstants.createIdentifier("example_mob"), EntityType.Builder.create(
 			ExampleMobEntity::new,
 			SpawnGroup.MISC

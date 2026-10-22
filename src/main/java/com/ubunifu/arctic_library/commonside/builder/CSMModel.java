@@ -134,34 +134,7 @@ public class CSMModel implements AutoCloseable {
 
 	private <T extends LivingEntity & CSMEntity, M extends EntityModel<T>> void __animateModel(T entity, M model)
 	{
-		float g = this.getTickDelta();
-		float h = MathHelper.lerpDegrees(g, entity.prevBodyYaw, entity.bodyYaw);
-		float j = MathHelper.lerpDegrees(g, entity.prevHeadYaw, entity.headYaw);
-		float k = j - h;
-		float n = 0.0F;
-		float o = 0.0F;
-		if (!entity.hasVehicle() && entity.isAlive()) {
-			n = entity.limbData.getLimbDistance(g);
-			o = entity.limbData.getLimbAngle(g);
-			if (entity.isBaby()) {
-				o *= 3.0F;
-			}
-
-			if (n > 1.0F) {
-				n = 1.0F;
-			}
-		}
-		float m = MathHelper.lerp(g, entity.prevPitch, entity.getPitch());
-		if (LivingEntityRenderer.renderFlipped(entity)) {
-			m *= -1.0F;
-			k *= -1.0F;
-		}
-		MatrixStack matrixStack = new MatrixStack(); // Probably not how its implemented but eh, we'll find out.
-		// g = tickDelta
-		float l = this.animateGetAnimationProgress(entity, g);
-		this.animateSetupTransforms(entity, matrixStack, l, h, g);
-		model.animateModel(entity, o, n, g);
-		model.setAngles(entity, o, n, l, k, m);
+		CSMModelAnimator.animate(this,entity,model);
 	}
 	private <T extends LivingEntity & CSMEntity> float animateGetAnimationProgress(T entity, float tickDelta) {
 		return (float)entity.age + tickDelta;
