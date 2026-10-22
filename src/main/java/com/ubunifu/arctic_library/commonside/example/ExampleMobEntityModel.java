@@ -8,7 +8,7 @@ import net.minecraft.client.model.*;
 import net.minecraft.client.render.entity.model.EntityModel;
 import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.util.Arm;
-import net.minecraft.util.math.MathHelper;
+import net.minecraft.util.math.*;
 
 public class ExampleMobEntityModel extends EntityModel<ExampleMobEntity> implements CSMModelWithArms, CSModel {
 	private final ModelPart _root;
@@ -221,6 +221,6 @@ public class ExampleMobEntityModel extends EntityModel<ExampleMobEntity> impleme
 	}
 
 	public static CSMRegistry.RegistryData buildRegistryData() {
-		return new CSMRegistry.RegistryData(getTexturedModelData(),96,96);
+		return new CSMRegistry.RegistryData(getTexturedModelData(),96,96, new Vec3d(1,1,1));
 	}
 }
