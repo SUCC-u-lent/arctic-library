@@ -83,11 +83,14 @@ public class ExampleMobEntityModel extends EntityModel<ExampleMobEntity> impleme
 		return getChild(_root, name);
 	}
 	private ModelPart getChild(ModelPart parent, String name){
+		if (parent == null) return null;
 		if (parent.containsPart(name)) return parent.getChild(name);
-		for (ModelPart value : ((ModelPartAccessor) (Object) parent).CSM$getChildren().values()) {
-			ModelPart p = getChild( value, name );
-			if (p != null) return p;
-		}
+		try{
+			for (ModelPart value : ((ModelPartAccessor) (Object) parent).CSM$getChildren().values()) {
+				ModelPart p = getChild( value, name );
+				if (p != null) return p;
+			}
+		}catch (Exception ignored){}
 		return null;
 	}
 
@@ -221,6 +224,6 @@ public class ExampleMobEntityModel extends EntityModel<ExampleMobEntity> impleme
 	}
 
 	public static CSMRegistry.RegistryData buildRegistryData() {
-		return new CSMRegistry.RegistryData(getTexturedModelData(),96,96, new Vec3d(1,1,1));
+		return new CSMRegistry.RegistryData(getTexturedModelData(),96,96, new Vec3d(1,1,1), new Vec3d(0,0,0));
 	}
 }

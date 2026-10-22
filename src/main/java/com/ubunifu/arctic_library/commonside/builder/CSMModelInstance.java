@@ -23,6 +23,7 @@ public class CSMModelInstance implements AutoCloseable {
 		this.modelData = CSMRegistry.getModelFor( entityType );
 		this.map = new CSMModel( this.modelData, applyGlobal );
 		this.map.scale = CSMRegistry.getModelSize( entityType );
+		this.map.offset = CSMRegistry.getModelOffset( entityType );
 	}
 
 	public <T extends LivingEntity & CSMEntity, M extends EntityModel<T> & CSModel> void animate(T entity, M model)

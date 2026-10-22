@@ -10,7 +10,9 @@ import net.minecraft.server.network.ServerPlayerEntity;
 import net.minecraft.text.Text;
 import org.apache.commons.lang3.NotImplementedException;
 
+import java.io.NotSerializableException;
 import java.util.*;
+import java.util.function.Function;
 
 public class ServerMultiBossBar extends MultiBossBar {
 
@@ -63,6 +65,16 @@ public class ServerMultiBossBar extends MultiBossBar {
 		if (this.players.stream().anyMatch(p->p.getUuid().equals(player.getUuid()))) return;
 		this.players.add(player);
 		sendBars(player);
+	}
+
+	@Override
+	public void setPercent(int index, float progress) {
+		if (isOutOfBounds(index)) return;
+		ServerBossBarSection section = (ServerBossBarSection) this.getMinibars().get( index );
+		float previousProgress = section.getPercent();
+		super.setPercent(index, progress);
+		if (previousProgress != progress)
+			onBarUpdate(PacketType.UPDATE_PERCENT, section);
 	}
 
 	@Override

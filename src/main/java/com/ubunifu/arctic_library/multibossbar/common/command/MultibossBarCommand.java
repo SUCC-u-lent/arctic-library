@@ -4,7 +4,10 @@ import com.mojang.brigadier.*;
 import com.mojang.brigadier.arguments.*;
 import com.mojang.brigadier.builder.*;
 import com.mojang.brigadier.context.CommandContext;
+import com.mojang.brigadier.exceptions.*;
+import com.mojang.brigadier.suggestion.*;
 import com.ubunifu.arctic_library.multibossbar.common.MultibossbarMod;
+import com.ubunifu.arctic_library.multibossbar.common.boss_bar.FillType;
 import com.ubunifu.arctic_library.multibossbar.common.boss_bar.SectionType;
 import com.ubunifu.arctic_library.multibossbar.common.boss_bar.container.ServerMultiBossBar;
 import com.ubunifu.arctic_library.multibossbar.common.boss_bar.sections.ServerBossBarSection;
@@ -21,6 +24,8 @@ import net.minecraft.text.Text;
 import org.quiltmc.loader.api.QuiltLoader;
 
 import java.util.*;
+import java.util.concurrent.CompletableFuture;
+import java.util.stream.Collectors;
 
 public final class MultibossBarCommand {
 	private static final Map<String, ServerMultiBossBar> BARS = new HashMap<>();
@@ -461,17 +466,6 @@ public final class MultibossBarCommand {
 			);
 	}
 
-	private static int setBarName(ServerCommandSource source, String id, String displayNameJson) {
-		ServerMultiBossBar bar = BARS.remove(id);
-		if (bar == null) return unknownBar(source, id);
-		Text displayName = parseTextJson(source, displayNameJson);
-		if (displayName == null) return 0;
-		try{
-			bar.setDisplayName(displayName);
-			return 1;
-		}catch (Exception ignored){}
-		return 0;
-	}
 	private static int create(
 		ServerCommandSource source,
 		String id,

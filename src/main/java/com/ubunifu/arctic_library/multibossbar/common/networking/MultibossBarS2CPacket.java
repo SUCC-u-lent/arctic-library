@@ -23,7 +23,11 @@ public record MultibossBarS2CPacket(@NotNull PacketByteBuf data) implements Cust
 		new PacketCodec<>() {
 			@Override
 			public void encode(PacketByteBuf buf, MultibossBarS2CPacket value) {
-				buf.writeBytes(value.data());
+				try{
+					buf.writeBytes(value.data());
+				}catch (Exception e) {
+					MultibossbarMod.LOGGER.warn("Caught encoding exception!",e);
+				}
 			}
 
 			@Override

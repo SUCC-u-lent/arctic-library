@@ -20,6 +20,7 @@ public class CSMModel implements AutoCloseable {
 	ModelData modelData;
 	boolean applyGlobal;
 	Vec3d scale = new Vec3d(1,1,1);
+	Vec3d offset = new Vec3d(0,0,0);
 
 	/** The identity map, aka the unchanged source. */
 	private final Map<String, CommonPart> BASE_PART_MAP = new HashMap<>();
@@ -35,6 +36,10 @@ public class CSMModel implements AutoCloseable {
 
 	public void setScale(float x, float y, float z) {
 		this.scale = new Vec3d(x,y,z);
+	}
+
+	public void setOffset(float x, float y, float z) {
+		this.offset = new Vec3d(x,y,z);
 	}
 
 	//region Animation
@@ -64,6 +69,7 @@ public class CSMModel implements AutoCloseable {
 	void syncTransforms(M model) {
 		Matrix4f matrix4f = new Matrix4f();
 		matrix4f.translate(-0.04f,1.501f,0);
+		matrix4f.translate((float) this.offset.x, (float) this.offset.y, (float) this.offset.z);
 		matrix4f.scale(
 			(float)scale.x,
 			(float)scale.y,
