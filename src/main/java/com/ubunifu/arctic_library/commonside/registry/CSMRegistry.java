@@ -2,6 +2,7 @@ package com.ubunifu.arctic_library.commonside.registry;
 
 import net.minecraft.client.model.ModelData;
 import net.minecraft.entity.*;
+import net.minecraft.util.math.Vec3d;
 import org.joml.*;
 
 import java.util.*;
@@ -11,7 +12,7 @@ public class CSMRegistry {
 	public interface Factory {
 		RegistryData get();
 	}
-	public record RegistryData(ModelData data, int textureWidth, int textureHeight){}
+	public record RegistryData(ModelData data, int textureWidth, int textureHeight, Vec3d scale){}
 	private static final Map<EntityType<?>, RegistryData> MODEL_MAP = new HashMap<>();
 	/**
 	 * Register the model data for an entity, this is how our system maps the model.
@@ -27,6 +28,10 @@ public class CSMRegistry {
 	public static Vector2i getTextureDimsFor(EntityType<?> entityType) {
 		RegistryData registryData = MODEL_MAP.get( entityType );
 		return new Vector2i( registryData.textureWidth(), registryData.textureHeight() );
+	}
+	public static Vec3d getModelSize(EntityType<?> entityType) {
+		RegistryData registryData = MODEL_MAP.get( entityType );
+		return registryData.scale();
 	}
 	public static boolean containsEntityType(EntityType<?> entityType)
 	{

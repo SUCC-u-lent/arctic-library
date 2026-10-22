@@ -22,6 +22,7 @@ public class CSMModelInstance implements AutoCloseable {
 		if (!CSMRegistry.containsEntityType( entityType )) throw new NotImplementedException("Entity type: "+entityType.toString()+" does not have a model data registered. Register the model data BEFORE running this.");
 		this.modelData = CSMRegistry.getModelFor( entityType );
 		this.map = new CSMModel( this.modelData, applyGlobal );
+		this.map.scale = CSMRegistry.getModelSize( entityType );
 	}
 
 	public <T extends LivingEntity & CSMEntity, M extends EntityModel<T> & CSModel> void animate(T entity, M model)
