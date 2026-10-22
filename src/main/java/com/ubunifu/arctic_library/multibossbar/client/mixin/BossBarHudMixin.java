@@ -110,16 +110,15 @@ public abstract class BossBarHudMixin {
 
 	@Unique
 	private boolean doesNextBarHaveTitle(List<ClientMultiBossBar> bossBarList, ClientMultiBossBar bossBar){
-		List<UUID> uuidList = bossBarList.stream().map(MultiBossBar::getUuid).toList();
-		if (!uuidList.contains(bossBar.getUuid())) return false;
-		int barIndex = uuidList.indexOf( bossBar.getUuid() );
+		try{
+			List<UUID> uuidList = bossBarList.stream().map(MultiBossBar::getUuid).toList();
+			int barIndex = uuidList.indexOf( bossBar.getUuid() );
 
-		if (barIndex < 0 || barIndex >= bossBarList.size()) return false;
-
-		return !bossBarList.get( barIndex + 1 )
-			.getDisplayName()
-			.getString()
-			.isBlank();
+			return !bossBarList.get( barIndex + 1 )
+				.getDisplayName()
+				.getString()
+				.isBlank();
+		}catch (Exception ignored) { return false; }
 	}
 
 	@Unique
