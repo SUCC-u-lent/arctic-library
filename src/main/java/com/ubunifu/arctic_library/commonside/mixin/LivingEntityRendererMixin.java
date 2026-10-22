@@ -4,6 +4,7 @@ import com.mojang.blaze3d.vertex.*;
 import com.ubunifu.arctic_library.commonside.*;
 import com.ubunifu.arctic_library.commonside.builder.*;
 import com.ubunifu.arctic_library.commonside.registry.CSMRegistry;
+import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.render.*;
 import net.minecraft.client.render.entity.*;
 import net.minecraft.client.render.entity.model.EntityModel;
@@ -26,6 +27,7 @@ public abstract class LivingEntityRendererMixin<E extends LivingEntity & CSMEnti
 		EntityType<?> entityType = livingEntity.getType();
 		if (!CSMRegistry.containsEntityType(entityType)) return;
 		if (!CSMConstants.shouldRenderCommonsideModel()) return;
+		if (!isHitboxesVisible()) return;
 		VertexConsumer vertexConsumer =
 			vertexConsumerProvider.getBuffer(RenderLayer.getLines());
 		matrices.push();
@@ -59,5 +61,13 @@ public abstract class LivingEntityRendererMixin<E extends LivingEntity & CSMEnti
 			CSMConstants.LOGGER.warn("Failed to draw bounds",e);
 		}
 		matrices.pop();
+	}
+	@Unique
+	private static boolean isHitboxesVisible()
+	{
+		try{
+			MinecraftClient client = MinecraftClient.getInstance();
+			return client.getEntityRenderDispatcher().shouldRenderHitboxes();
+		}catch (Exception ignored){ return false; }
 	}
 }
