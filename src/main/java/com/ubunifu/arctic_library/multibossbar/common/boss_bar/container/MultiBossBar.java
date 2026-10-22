@@ -127,7 +127,7 @@ public class MultiBossBar {
 		return this.multiBossBars.size();
 	}
 
-	private boolean isOutOfBounds(int index)
+	protected boolean isOutOfBounds(int index)
 	{
 		return index < 0 || index >= multiBossBars.size();
 	}

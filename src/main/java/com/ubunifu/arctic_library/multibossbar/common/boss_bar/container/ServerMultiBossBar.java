@@ -59,6 +59,16 @@ public class ServerMultiBossBar extends MultiBossBar {
 	}
 
 	@Override
+	public void setPercent(int index, float progress) {
+		if (isOutOfBounds(index)) return;
+		ServerBossBarSection section = (ServerBossBarSection) this.getMinibars().get( index );
+		float previousProgress = section.getPercent();
+		super.setPercent(index, progress);
+		if (previousProgress != progress)
+			onBarUpdate(PacketType.UPDATE_PERCENT, section);
+	}
+
+	@Override
 	public void setDisplayName(Text text) {
 		super.setDisplayName(text);
 		onUpdate(PacketType.UPDATE_CONTAINER_NAME,null);
