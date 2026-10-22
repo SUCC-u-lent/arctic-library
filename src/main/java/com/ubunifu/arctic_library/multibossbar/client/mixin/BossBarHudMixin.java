@@ -229,8 +229,14 @@ public abstract class BossBarHudMixin {
 
 		Sprite sprite;
 
-		if (bar.getStyle() != BossBar.Style.PROGRESS) sprite = ((GuiGraphicsAccessor)graphics).multibossbar$getManager().getSprite(alternativeTextures[bar.getColor().ordinal()]);
-		else sprite = ((GuiGraphicsAccessor)graphics).multibossbar$getManager().getSprite(textures[bar.getColor().ordinal()]);
+		try {
+			if (bar.getStyle() != BossBar.Style.PROGRESS) sprite = ((GuiGraphicsAccessor)graphics).multibossbar$getManager().getSprite(alternativeTextures[bar.getColor().ordinal()]);
+			else sprite = ((GuiGraphicsAccessor)graphics).multibossbar$getManager().getSprite(textures[bar.getColor().ordinal()]);
+		} catch (Exception ignored){ sprite = null; }
+		if (sprite == null) {
+			RenderSystem.disableBlend();
+			return 0;
+		}
 
 		((GuiGraphicsAccessor)graphics).multibossbar$invokeDrawSprite(sprite,
 			x,
