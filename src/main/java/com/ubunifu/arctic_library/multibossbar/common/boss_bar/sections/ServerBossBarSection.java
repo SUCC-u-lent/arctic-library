@@ -14,8 +14,8 @@ import net.minecraft.util.math.MathHelper;
 import java.util.*;
 
 public class ServerBossBarSection extends BossBarSection {
-	public ServerBossBarSection(int index, Text displayName, BossBar.Color color, BossBar.Style style, SectionType sectionType, int scaleSupplier) {
-		super(index, MathHelper.randomUuid(), displayName, color, style, sectionType, scaleSupplier);
+	public ServerBossBarSection(MultiBossBar container, int index, Text displayName, BossBar.Color color, BossBar.Style style, SectionType sectionType, int scaleSupplier) {
+		super(container, index, MathHelper.randomUuid(), displayName, color, style, sectionType, scaleSupplier);
 	}
 
 	private void issueUpdate(PacketType type)

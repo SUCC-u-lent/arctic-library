@@ -132,7 +132,7 @@ public class ClientMultibarReciever {
 			case CLEAR_BARS -> removeBar(bossBar);
 			case ADD_BAR -> {
 				int index = packetByteBuf.readInt();
-				ClientBossBarSection section1 = BossBarSection.client_deserializeFromBuf(packetByteBuf);
+				ClientBossBarSection section1 = BossBarSection.client_deserializeFromBuf(bossBar,packetByteBuf);
 				if (bossBar.isIndexOccupied(index))
 					bossBar.setBossBar(index,section1);
 				else bossBar.addBossBar(section1);

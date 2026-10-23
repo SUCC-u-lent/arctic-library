@@ -592,6 +592,7 @@ public final class MultibossBarCommand {
 
 			int index = bar.count();
 			ServerBossBarSection section = new ServerBossBarSection(
+				bar,
 				index,
 				name,
 				color,

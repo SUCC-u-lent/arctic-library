@@ -33,12 +33,14 @@ public class MultiBossBar {
 		int listSize = p.readInt();
 		List<BossBarSection> sections = new ArrayList<>(listSize);
 		for (int i = 0; i < listSize; i++) {
-			BossBarSection section = BossBarSection.client_deserializeFromBuf(p);
+			BossBarSection section = BossBarSection.client_deserializeFromBuf(new MultiBossBar(),p);
 			sections.add(section);
 		}
 		FillType fillType = p.readEnumConstant(FillType.class);
 		boolean visible = p.readBoolean();
-		return new ClientMultiBossBar(uuid,name,sections,fillType,visible);
+		ClientMultiBossBar bb = new ClientMultiBossBar(uuid,name,sections,fillType,visible);
+		bb.getBossBars().forEach(s->s.setContainer(bb));
+		return bb;
 	}
 
 	protected MultiBossBar(UUID uuid, Text name, List<BossBarSection> sections, FillType fillType, boolean visible) {

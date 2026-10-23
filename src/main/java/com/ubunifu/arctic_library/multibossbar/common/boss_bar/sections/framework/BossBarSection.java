@@ -43,7 +43,7 @@ public class BossBarSection
 		buf.writeBoolean(thickenFog);
 		buf.writeInt(scaleSupplier);
 	}
-	public static ClientBossBarSection client_deserializeFromBuf(PacketByteBuf buf)
+	public static ClientBossBarSection client_deserializeFromBuf(MultiBossBar container,PacketByteBuf buf)
 	{
 		UUID uuid = buf.readUuid();
 		int index = buf.readInt();
@@ -56,20 +56,23 @@ public class BossBarSection
 		boolean dragonMusic = buf.readBoolean();
 		boolean thickenFog = buf.readBoolean();
 		int scaleSupplier = buf.readInt();
-		return new ClientBossBarSection( index, uuid, text, percent, color, style, sectionType, darkenSky, dragonMusic, thickenFog, scaleSupplier );
+		return new ClientBossBarSection(container, index, uuid, text, percent, color, style, sectionType, darkenSky, dragonMusic, thickenFog, scaleSupplier );
 	}
 
-	protected BossBarSection(int index,
-						   UUID uuid,
-	                       Text name,
-	                       float percent,
-	                       BossBar.Color color,
-	                       BossBar.Style style,
-	                       SectionType sectionType,
-						   boolean darkenSky,
-						   boolean dragonMusic,
-						   boolean thickenFog,
-	                       int scaleSupplier){
+	protected BossBarSection(
+		   MultiBossBar container,
+		   int index,
+		   UUID uuid,
+		   Text name,
+		   float percent,
+		   BossBar.Color color,
+		   BossBar.Style style,
+		   SectionType sectionType,
+		   boolean darkenSky,
+		   boolean dragonMusic,
+		   boolean thickenFog,
+		   int scaleSupplier){
+		this.container = container;
 		this.barIndex = index;
 		this.uuid = uuid;
 		this.name = name;
@@ -83,16 +86,16 @@ public class BossBarSection
 		this.thickenFog = thickenFog;
 	}
 
-	public BossBarSection(int index,UUID uuid, Text name, BossBar.Color color, BossBar.Style style, SectionType sectionType, int scaleSupplier) {
-		this(index,uuid,name,1,color,style,sectionType, false, false, false ,scaleSupplier);
+	public BossBarSection(MultiBossBar container,int index,UUID uuid, Text name, BossBar.Color color, BossBar.Style style, SectionType sectionType, int scaleSupplier) {
+		this(container,index,uuid,name,1,color,style,sectionType, false, false, false ,scaleSupplier);
 	}
 
-	public BossBarSection(UUID uuid, Text name, BossBar.Color color, BossBar.Style style, SectionType sectionType) {
-		this(0, uuid, name, 1.0F, color, style, sectionType, false, false, false, 5);
+	public BossBarSection(MultiBossBar container,UUID uuid, Text name, BossBar.Color color, BossBar.Style style, SectionType sectionType) {
+		this(container,0, uuid, name, 1.0F, color, style, sectionType, false, false, false, 5);
 	}
 
+	public void setContainer(MultiBossBar bar) { this.container = bar; }
 	public MultiBossBar getContainer() { return this.container; }
-	public void setContainer( MultiBossBar bossBar ) { this.container = bossBar; }
 
 	public int getScaleSupplier() {
 		return this.scaleSupplier;
