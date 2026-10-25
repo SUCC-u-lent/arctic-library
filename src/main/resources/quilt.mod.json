@@ -38,8 +38,5 @@
 		]
 	},
 	"mixin": [
-		"multibossbar.mixins.json",
-		"client.multibossbar.mixins.json",
-		"commonside.mixins.json"
 	]
 }
