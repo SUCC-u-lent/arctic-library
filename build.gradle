@@ -59,6 +59,7 @@ dependencies {
 	modImplementation libs.bundles.quilted.fabric.api
 	modApi(include("com.github.SUCC-u-lent:commonside-models-library:${project.commonside_version}"))
 	modApi(include("com.github.SUCC-u-lent:multibossbar-library:${project.multibar_version}"))
+	modApi(include("com.github.SUCC-u-lent:chained_entity_library:${project.chained_entity_version}"))
 	// modImplementation libs.bundles.quilted.fabric.api.deprecated // If you wish to use Fabric API's deprecated modules, you can replace the above line with this one
 }
 
