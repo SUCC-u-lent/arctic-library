@@ -35,7 +35,7 @@ dependencies {
 	// Fabric API. This is technically optional, but you probably want it anyway.
 	modImplementation "net.fabricmc.fabric-api:fabric-api:${project.fabric_api_version}"
 
-	include modImplementation("software.bernie.geckolib:geckolib-fabric-${minecraft_version}:${geckolib_version}")
+	include modImplementation("software.bernie.geckolib:geckolib-fabric-${minecraft_version}:${project.geckolib_version}")
 	include modImplementation("com.github.SUCC-u-lent:chained_entity_library:${project.minecraft_version}-${project.chained_entity_version}-${project.loader_name}")
 	include modImplementation("com.github.SUCC-u-lent:multibossbar-library:${project.minecraft_version}-${project.multibar_version}-${project.loader_name}")
 }
